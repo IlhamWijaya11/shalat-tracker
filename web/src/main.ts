@@ -1,8 +1,11 @@
 import { Camera, requestWakeLock } from "./camera.js";
 import { postureLabel } from "./core/posture.js";
 import { prayerDisplayName } from "./core/prayerType.js";
-import { RakaatSession, sessionIsValid } from "./core/rakaatSession.js";
+import { PrayerTypeInference } from "./core/prayerTypeInference.js";
+import { makeSessionId, RakaatSession, sessionIsValid } from "./core/rakaatSession.js";
 import { RakaatTracker } from "./core/rakaatTracker.js";
+import { SujudRakaatCounter } from "./core/sujudRakaatCounter.js";
+import { MotionSensor } from "./motion/motionSensor.js";
 import { PoseEstimator } from "./pose/poseEstimator.js";
 import { SessionStore } from "./storage.js";
 
@@ -32,6 +35,57 @@ let rafId = 0;
 let modelReady = false;
 let wakeLock: WakeLockSentinel | null = null;
 
+// ---- Motion (IMU) session ----
+const motion = new MotionSensor();
+const motionInference = new PrayerTypeInference();
+let counter = new SujudRakaatCounter();
+let sessionMode: "camera" | "motion" = "camera";
+
+/** Toggle the live screen between camera and motion (pocket) layouts. */
+function setLiveMotionUI(on: boolean): void {
+  for (const id of ["video", "overlay", "btn-flip"]) $(id).classList.toggle("hidden", on);
+  $("posture-label").classList.toggle("hidden", on);
+}
+
+async function startMotionSession(): Promise<void> {
+  if (!MotionSensor.isSupported) {
+    alert("Sensor gerak tidak tersedia di perangkat ini. Coba buka di HP.");
+    return;
+  }
+  const ok = await MotionSensor.requestPermission();
+  if (!ok) {
+    alert("Izin sensor gerak ditolak. Aktifkan untuk memakai mode ini.");
+    return;
+  }
+  sessionMode = "motion";
+  counter = new SujudRakaatCounter();
+  show("live");
+  setLiveMotionUI(true);
+  $("rakaat-count").textContent = "0";
+  $("cam-status").textContent = "HP di saku — sujud terhitung otomatis";
+  wakeLock = await requestWakeLock();
+  motion.start((_down, t) => {
+    counter.feed(_down, t);
+    $("rakaat-count").textContent = String(counter.rakaatCount);
+  });
+}
+
+function finishMotionSession(): void {
+  motion.stop();
+  wakeLock?.release().catch(() => {});
+  wakeLock = null;
+  const rakaat = counter.rakaatCount;
+  const session: RakaatSession = {
+    id: makeSessionId(),
+    timestamp: Date.now(),
+    prayer: motionInference.inferAt(rakaat, new Date()),
+    rakaat,
+    violations: [], // motion mode has no posture timing to validate tuma'ninah
+  };
+  SessionStore.add(session);
+  showResult(session);
+}
+
 async function ensureModel(): Promise<void> {
   if (modelReady) return;
   $("cam-status").textContent = "Memuat model…";
@@ -40,7 +94,9 @@ async function ensureModel(): Promise<void> {
 }
 
 async function startSession(): Promise<void> {
+  sessionMode = "camera";
   show("live");
+  setLiveMotionUI(false);
   tracker = new RakaatTracker();
   $("rakaat-count").textContent = "0";
   $("posture-label").textContent = "—";
@@ -81,6 +137,10 @@ function loop(): void {
 }
 
 function finishSession(): void {
+  if (sessionMode === "motion") {
+    finishMotionSession();
+    return;
+  }
   cancelAnimationFrame(rafId);
   tracker.stop(performance.now() / 1000);
   camera.stop();
@@ -154,6 +214,7 @@ $("btn-onboard-done").addEventListener("click", () => {
   goTab("setup");
 });
 $("btn-start").addEventListener("click", startSession);
+$("btn-start-motion").addEventListener("click", startMotionSession);
 $("btn-stop").addEventListener("click", finishSession);
 $("btn-flip").addEventListener("click", async () => {
   try {
