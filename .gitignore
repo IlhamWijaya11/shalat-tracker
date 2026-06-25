@@ -1,0 +1,16 @@
+# deps & build
+web/node_modules/
+web/dist/
+.build/
+.swiftpm/
+DerivedData/
+
+# xcode / xcodegen-generated (regenerate on Mac with `xcodegen generate`)
+*.xcodeproj/
+*.xcworkspace/
+xcuserdata/
+iOSApp/Generated-Info.plist
+
+# os
+.DS_Store
+Thumbs.db

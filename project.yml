@@ -1,0 +1,30 @@
+# XcodeGen spec — generate the iOS app project on a Mac with: `xcodegen generate`
+# Builds with only the local RakaatCore package + Apple frameworks (no external deps).
+name: RakaatDetector
+options:
+  bundleIdPrefix: com.contoh
+  deploymentTarget:
+    iOS: "16.0"
+packages:
+  RakaatCore:
+    path: .
+targets:
+  RakaatDetector:
+    type: application
+    platform: iOS
+    sources: [iOSApp]
+    dependencies:
+      - package: RakaatCore
+    info:
+      path: iOSApp/Generated-Info.plist
+      properties:
+        CFBundleDisplayName: Rakaat
+        NSCameraUsageDescription: "Mendeteksi gerakan shalat di HP. Tidak merekam."
+        NSLocationWhenInUseUsageDescription: "Menentukan waktu shalat dari lokasi."
+        UILaunchScreen: {}
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.contoh.rakaatdetector
+        TARGETED_DEVICE_FAMILY: "1"
+        GENERATE_INFOPLIST_FILE: NO
+        CODE_SIGN_STYLE: Automatic

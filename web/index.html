@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1" />
+  <meta name="theme-color" content="#B0904C" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <link rel="apple-touch-icon" href="/icon.svg" />
+  <title>Shalat Tracker</title>
+  <link rel="stylesheet" href="/src/styles.css" />
+</head>
+<body>
+<div id="app">
+
+  <!-- 1. Onboarding -->
+  <section id="screen-onboarding" class="screen pad center hidden">
+    <div class="spacer"></div>
+    <div class="brand"><span class="brand-mark">☪</span> Shalat Tracker</div>
+    <div class="emoji">🤲</div>
+    <h1 class="title-c">Hitung rakaat,<br>tanpa direkam</h1>
+    <p class="body-c">Kamera mendeteksi gerakan shalat di perangkatmu. <b>Tidak ada video disimpan</b> — semua diproses lokal, offline.</p>
+    <span class="pill soft">🔒 On-device · tanpa server</span>
+    <div class="spacer"></div>
+    <button id="btn-allow-cam" class="btn">Izinkan Kamera</button>
+    <button id="btn-onboard-done" class="btn ghost">Lanjut</button>
+  </section>
+
+  <!-- 2. Home / Setup -->
+  <section id="screen-setup" class="screen pad hidden">
+    <div class="topbar">
+      <div><div class="greet">Assalamu Alaikum</div><div class="greet-name">Sahabat</div></div>
+      <div class="avatar">S</div>
+    </div>
+
+    <div class="hero">
+      <div class="hero-label">Deteksi Rakaat</div>
+      <div class="hero-title">Mulai Hitung</div>
+      <div class="hero-sub">Kamera baca gerakan shalat otomatis</div>
+      <div class="hero-meta">🔒 On-device · tanpa rekam video</div>
+    </div>
+
+    <div class="tile-card">
+      <div class="tile-card-title">Sebelum mulai</div>
+      <ul class="bullets">
+        <li>Taruh perangkat <b>menyamping</b> (profil) ±2 m.</li>
+        <li>Seluruh badan masuk frame saat berdiri & sujud.</li>
+        <li>Cahaya cukup.</li>
+      </ul>
+    </div>
+
+    <div class="spacer"></div>
+    <button id="btn-start" class="btn">Mulai Deteksi</button>
+  </section>
+
+  <!-- 3. Live -->
+  <section id="screen-live" class="screen hidden">
+    <div class="cam-wrap">
+      <video id="video" playsinline muted></video>
+      <canvas id="overlay"></canvas>
+      <span class="pill dark badge-privacy">🔒 Tidak merekam</span>
+      <span id="cam-status" class="cam-status">Memuat model…</span>
+      <button id="btn-flip" class="cam-flip" title="Ganti kamera depan/belakang">⟲</button>
+      <span id="posture-label" class="pill gold badge-posture">—</span>
+      <div class="counter">
+        <div id="rakaat-count" class="count-num">0</div>
+        <div id="counter-sub" class="count-sub">Rakaat</div>
+      </div>
+      <button id="btn-stop" class="btn ghost btn-stop">Selesai</button>
+    </div>
+  </section>
+
+  <!-- 4. Result -->
+  <section id="screen-result" class="screen pad center hidden">
+    <div class="spacer"></div>
+    <div id="result-icon" class="result-badge">✓</div>
+    <p class="body-c">Shalat Selesai</p>
+    <div id="result-prayer" class="big-prayer">Subuh</div>
+    <div id="result-rakaat" class="body-c">2 Rakaat</div>
+    <div id="result-violations" class="card"></div>
+    <p class="disclaimer">Alat bantu hitung, bukan penentu sah/batal shalat.</p>
+    <div class="spacer"></div>
+    <button id="btn-result-done" class="btn">Selesai</button>
+  </section>
+
+  <!-- 5. History -->
+  <section id="screen-history" class="screen pad hidden">
+    <h2 class="head">Riwayat</h2>
+    <div id="history-list" class="list"></div>
+  </section>
+
+  <!-- 6. Statistics -->
+  <section id="screen-stats" class="screen pad hidden">
+    <h2 class="head">Minggu Ini</h2>
+    <div id="stats-cards" class="stat-row"></div>
+  </section>
+
+  <!-- 7. Settings -->
+  <section id="screen-settings" class="screen pad hidden">
+    <h2 class="head">Pengaturan</h2>
+    <div class="setting-row"><span>Ambang tuma'ninah</span><span class="muted">1.0 dtk</span></div>
+    <div class="setting-row"><span>Sensitivitas deteksi</span><span class="muted">Sedang</span></div>
+    <div class="setting-row"><span>Data tersimpan</span><span class="muted">di perangkat saja</span></div>
+    <button id="btn-clear" class="btn ghost" style="margin-top:20px">Hapus riwayat</button>
+    <p class="disclaimer" style="margin-top:auto">Tanpa video, tanpa server. Semua offline.</p>
+  </section>
+
+  <!-- Bottom tab bar -->
+  <nav id="tabbar" class="tabbar hidden">
+    <button data-tab="setup" class="tab active">⌂<span>Home</span></button>
+    <button data-tab="history" class="tab">☰<span>Riwayat</span></button>
+    <button data-tab="stats" class="tab">▤<span>Statistik</span></button>
+    <button data-tab="settings" class="tab">⚙<span>Atur</span></button>
+  </nav>
+
+</div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RakaatDetector — Mockup UI (Minimalis Tenang)</title>
+<style>
+  :root{
+    --cream:#F5F2E8; --green:#39745F; --green-soft:#8CB09E; --ink:#2A2E2B;
+    --warn:#CC8C33; --card:#FFFFFF; --line:#E4E0D4;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    background:#EDEAE0; color:var(--ink); padding:40px 24px;
+  }
+  h1{font-size:22px;font-weight:700;color:var(--green);margin-bottom:4px;}
+  .sub{color:#6b6f6a;margin-bottom:32px;font-size:14px;}
+  .board{display:flex;flex-wrap:wrap;gap:32px;}
+  .screen{width:280px;}
+  .caption{font-size:13px;font-weight:600;color:var(--green);margin-bottom:10px;
+    display:flex;gap:8px;align-items:center;}
+  .caption .n{background:var(--green);color:#fff;width:20px;height:20px;border-radius:50%;
+    font-size:12px;display:grid;place-items:center;}
+  .phone{
+    width:280px;height:580px;background:var(--cream);border-radius:38px;
+    border:10px solid #1b1d1c;box-shadow:0 12px 32px rgba(0,0,0,.18);
+    position:relative;overflow:hidden;display:flex;flex-direction:column;
+  }
+  .notch{position:absolute;top:0;left:50%;transform:translateX(-50%);
+    width:120px;height:24px;background:#1b1d1c;border-radius:0 0 16px 16px;z-index:5;}
+  .pad{padding:40px 20px 22px;display:flex;flex-direction:column;height:100%;}
+  .pill{display:inline-flex;gap:6px;align-items:center;font-size:11px;font-weight:600;
+    padding:6px 11px;border-radius:999px;}
+  .pill.dark{background:rgba(0,0,0,.45);color:#fff;}
+  .pill.green{background:var(--green);color:#fff;}
+  .spacer{flex:1;}
+  .big{font-size:72px;font-weight:800;line-height:1;color:var(--ink);text-align:center;}
+  .label-big{font-size:13px;letter-spacing:.08em;text-align:center;color:#6b6f6a;
+    text-transform:uppercase;margin-top:4px;}
+  .btn{background:var(--green);color:#fff;text-align:center;padding:14px;border-radius:16px;
+    font-weight:600;font-size:15px;}
+  .btn.light{background:#fff;color:var(--ink);border:1px solid var(--line);}
+  .cam{flex:1;background:linear-gradient(160deg,#2f3a35,#1d2420);border-radius:22px;
+    position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  .skeleton{position:absolute;inset:0;opacity:.85;}
+  .title{font-size:24px;font-weight:700;margin-bottom:8px;}
+  .body{font-size:14px;color:#5c605b;line-height:1.5;}
+  .icon-circle{width:64px;height:64px;border-radius:50%;background:var(--green-soft);
+    display:grid;place-items:center;font-size:30px;margin-bottom:18px;}
+  .row{display:flex;justify-content:space-between;align-items:center;padding:13px 0;
+    border-bottom:1px solid var(--line);font-size:14px;}
+  .row:last-child{border-bottom:none;}
+  .tag{font-size:12px;font-weight:700;padding:3px 9px;border-radius:8px;}
+  .tag.ok{background:#E5F0EA;color:var(--green);}
+  .tag.warn{background:#F7ECD8;color:var(--warn);}
+  .card{background:var(--card);border-radius:16px;padding:16px;border:1px solid var(--line);}
+  .stat{display:flex;gap:12px;}
+  .stat .box{flex:1;background:#fff;border:1px solid var(--line);border-radius:14px;
+    padding:14px;text-align:center;}
+  .stat .num{font-size:26px;font-weight:800;color:var(--green);}
+  .stat .lbl{font-size:11px;color:#6b6f6a;margin-top:2px;}
+  .bars{display:flex;gap:7px;align-items:flex-end;height:90px;margin-top:8px;}
+  .bars div{flex:1;background:var(--green-soft);border-radius:6px 6px 0 0;}
+  .toggle{width:40px;height:24px;border-radius:999px;background:var(--green);position:relative;}
+  .toggle::after{content:"";position:absolute;top:3px;right:3px;width:18px;height:18px;
+    border-radius:50%;background:#fff;}
+  .head-h{font-size:20px;font-weight:700;margin-bottom:16px;}
+  .frame-guide{position:absolute;inset:18px;border:2px dashed var(--green-soft);border-radius:18px;}
+</style>
+</head>
+<body>
+  <h1>RakaatDetector — Mockup UI</h1>
+  <div class="sub">Style: minimalis tenang · hijau/krem · 7 layar · iOS</div>
+
+  <div class="board">
+
+    <!-- 1. Onboarding / Izin -->
+    <div class="screen">
+      <div class="caption"><span class="n">1</span> Onboarding / Izin</div>
+      <div class="phone"><div class="notch"></div><div class="pad">
+        <div class="spacer"></div>
+        <div class="icon-circle">🤲</div>
+        <div class="title">Hitung rakaat,<br>tanpa direkam</div>
+        <div class="body" style="margin:14px 0 22px">
+          Kamera mendeteksi gerakan shalat di HP-mu. <b>Tidak ada video disimpan</b>
+          — semua diproses di perangkat, offline.
+        </div>
+        <div class="pill green" style="margin-bottom:24px;">🔒 On-device · tanpa server</div>
+        <div class="spacer"></div>
+        <div class="btn" style="margin-bottom:10px">Izinkan Kamera</div>
+        <div class="btn light">Izinkan Lokasi (waktu shalat)</div>
+      </div></div>
+    </div>
+
+    <!-- 2. Setup Kamera -->
+    <div class="screen">
+      <div class="caption"><span class="n">2</span> Setup Kamera</div>
+      <div class="phone"><div class="notch"></div><div class="pad">
+        <div class="head-h">Posisikan HP</div>
+        <div class="cam" style="flex:none;height:230px;margin-bottom:18px;">
+          <div class="frame-guide"></div>
+          <span style="font-size:54px;">🧍</span>
+        </div>
+        <div class="body">
+          • Taruh HP di tripod, <b>menyamping</b> (profil) ±2 m.<br>
+          • Pastikan seluruh badan masuk frame saat berdiri & sujud.<br>
+          • Cahaya cukup.
+        </div>
+        <div class="spacer"></div>
+        <div class="btn">Mulai</div>
+      </div></div>
+    </div>
+
+    <!-- 3. Live -->
+    <div class="screen">
+      <div class="caption"><span class="n">3</span> Live (saat shalat)</div>
+      <div class="phone"><div class="notch"></div>
+        <div class="cam" style="border-radius:0;">
+          <svg class="skeleton" viewBox="0 0 280 560">
+            <g stroke="#8CB09E" stroke-width="4" fill="#8CB09E">
+              <circle cx="150" cy="150" r="16"/>
+              <line x1="150" y1="166" x2="150" y2="300"/>
+              <line x1="150" y1="200" x2="100" y2="260"/>
+              <line x1="150" y1="200" x2="200" y2="250"/>
+              <line x1="150" y1="300" x2="120" y2="420"/>
+              <line x1="150" y1="300" x2="185" y2="420"/>
+            </g>
+          </svg>
+          <div style="position:absolute;top:20px;left:16px;">
+            <span class="pill dark">🔒 Tidak merekam</span>
+          </div>
+          <div style="position:absolute;bottom:150px;left:50%;transform:translateX(-50%);">
+            <span class="pill green" style="font-size:14px;padding:8px 18px;">RUKU</span>
+          </div>
+          <div style="position:absolute;bottom:80px;left:0;right:0;text-align:center;color:#fff;">
+            <div style="font-size:64px;font-weight:800;">2</div>
+            <div style="font-size:13px;opacity:.85;">Rakaat · Subuh · 04:45</div>
+          </div>
+          <div style="position:absolute;bottom:20px;left:20px;right:20px;">
+            <div class="btn light">Selesai</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Hasil -->
+    <div class="screen">
+      <div class="caption"><span class="n">4</span> Hasil</div>
+      <div class="phone"><div class="notch"></div><div class="pad">
+        <div class="spacer"></div>
+        <div style="text-align:center;">
+          <div style="font-size:48px;color:var(--warn);">⚠️</div>
+          <div class="body" style="margin:6px 0 18px;">Shalat Selesai</div>
+          <div style="font-size:38px;font-weight:800;color:var(--green);">Subuh</div>
+          <div style="font-size:17px;color:#5c605b;margin-top:2px;">2 Rakaat</div>
+        </div>
+        <div class="card" style="margin:22px 0;">
+          <div class="row"><span>✓ Rakaat 1</span><span class="tag ok">tertib</span></div>
+          <div class="row"><span>⚠ Rakaat 2 · ruku</span><span class="tag warn">cepat</span></div>
+        </div>
+        <div class="body" style="text-align:center;font-size:12px;color:#8a8e89;">
+          Alat bantu hitung, bukan penentu sah/batal shalat.
+        </div>
+        <div class="spacer"></div>
+        <div class="btn">Selesai</div>
+      </div></div>
+    </div>
+
+    <!-- 5. Riwayat -->
+    <div class="screen">
+      <div class="caption"><span class="n">5</span> Riwayat</div>
+      <div class="phone"><div class="notch"></div><div class="pad">
+        <div class="head-h">Riwayat Shalat</div>
+        <div class="row"><span><b>Subuh</b><br><span style="font-size:12px;color:#8a8e89">24 Jun · 04:45</span></span><span><b>2</b> <span class="tag ok">✓</span></span></div>
+        <div class="row"><span><b>Isya</b><br><span style="font-size:12px;color:#8a8e89">23 Jun · 19:30</span></span><span><b>4</b> <span class="tag ok">✓</span></span></div>
+        <div class="row"><span><b>Maghrib</b><br><span style="font-size:12px;color:#8a8e89">23 Jun · 18:10</span></span><span><b>3</b> <span class="tag warn">⚠</span></span></div>
+        <div class="row"><span><b>Ashar</b><br><span style="font-size:12px;color:#8a8e89">23 Jun · 15:20</span></span><span><b>4</b> <span class="tag ok">✓</span></span></div>
+        <div class="row"><span><b>Dzuhur</b><br><span style="font-size:12px;color:#8a8e89">23 Jun · 12:15</span></span><span><b>4</b> <span class="tag ok">✓</span></span></div>
+        <div class="spacer"></div>
+      </div></div>
+    </div>
+
+    <!-- 6. Settings -->
+    <div class="screen">
+      <div class="caption"><span class="n">6</span> Settings</div>
+      <div class="phone"><div class="notch"></div><div class="pad">
+        <div class="head-h">Pengaturan</div>
+        <div class="row"><span>Lokasi waktu shalat</span><span style="color:var(--green);font-weight:600;">Otomatis ›</span></div>
+        <div class="row"><span>Kota (manual)</span><span style="color:#8a8e89;">Jakarta ›</span></div>
+        <div class="row"><span>Ambang tuma'ninah</span><span style="color:#8a8e89;">1.0 dtk ›</span></div>
+        <div class="row"><span>Mode gelap</span><span class="toggle"></span></div>
+        <div class="row"><span>Sensitivitas deteksi</span><span style="color:#8a8e89;">Sedang ›</span></div>
+        <div class="spacer"></div>
+        <div class="body" style="font-size:12px;color:#8a8e89;text-align:center;">
+          Semua data tersimpan di HP. Tidak ada video.
+        </div>
+      </div></div>
+    </div>
+
+    <!-- 7. Statistik -->
+    <div class="screen">
+      <div class="caption"><span class="n">7</span> Statistik</div>
+      <div class="phone"><div class="notch"></div><div class="pad">
+        <div class="head-h">Minggu Ini</div>
+        <div class="stat" style="margin-bottom:16px;">
+          <div class="box"><div class="num">32</div><div class="lbl">Shalat</div></div>
+          <div class="box"><div class="num">91%</div><div class="lbl">Tertib</div></div>
+          <div class="box"><div class="num">5</div><div class="lbl">Hari aktif</div></div>
+        </div>
+        <div class="card">
+          <div style="font-size:13px;color:#6b6f6a;">Konsistensi harian</div>
+          <div class="bars">
+            <div style="height:80%"></div><div style="height:100%"></div>
+            <div style="height:60%"></div><div style="height:100%"></div>
+            <div style="height:90%"></div><div style="height:40%"></div>
+            <div style="height:100%"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:10px;color:#8a8e89;margin-top:6px;">
+            <span>S</span><span>S</span><span>R</span><span>K</span><span>J</span><span>S</span><span>M</span>
+          </div>
+        </div>
+        <div class="spacer"></div>
+      </div></div>
+    </div>
+
+  </div>
+</body>
+</html>
